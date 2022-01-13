@@ -1,50 +1,66 @@
 package com.codegym;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-
 import java.util.Scanner;
 
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        int size;
         int choice;
-        System.out.println("----Nhập thông tin khách hàng----");
-        System.out.println("Nhập số lượng hộ dân sử dụng điện: ");
-        size = scanner.nextInt();
-        BienLai[] bienLai = new BienLai[size];
-        for (int i = 0; i < bienLai.length; i++) {
-            System.out.println("Nhập thông tin khách hàng thứ: " + (i + 1));
-            bienLai[i] = inputPerson();
-        }
-        showAll(bienLai);
+        BillManagement billManagement = new BillManagement();
+        menu();
+        do {
+            System.out.println("Nhập lựa chọn của bạn: ");
+            choice = scanner.nextInt();
+            if (choice > 2) {
+                System.out.println("Menu chỉ có từ 1=>2");
+            }
+            switch (choice) {
+                case 1: {
+                    System.out.println("----Hiển thị thông tin biên lai----");
+                    billManagement.showAllBill();
+                    break;
+                }
+                case 2: {
+                    System.out.println("----NHập biên lai----");
+                    System.out.println("Nhập vị trí nhập biên lai: ");
+                    int index = scanner.nextInt();
+                    if (index - 1 < 0 || index - 1 > billManagement.bills.length) {
+                        System.out.println("Vị trí không hợp lệ");
+                    } else {
+                        Bill newBill = inputCustomerInfo();
+                        billManagement.addNewBill(index - 1,newBill );
+                    }
+
+                    break;
+                }
+            }
+        } while (choice != 0);
     }
 
     public static void menu() {
-        System.out.println("Menu: ");
-        System.out.println("1. Nhập thông tin khách hàng ");
-        System.out.println("2. Hiển thị thông tin khách hàng ");
+        System.out.println("MENU QUẢN LÝ KHÁCH HÀNG: ");
+        System.out.println("1. Hiển thị thông tin biên lai ");
+        System.out.println("2. Nhập biên lai ");
+        System.out.println("0. Thoát");
+
     }
 
-    public static BienLai inputPerson() {
+    public static Bill inputCustomerInfo() {
         scanner.nextLine();
         System.out.println("Nhập tên chủ hộ");
         String name = scanner.nextLine();
         System.out.println("Nhập số nhà: ");
-        int number = scanner.nextInt();
+        int address = scanner.nextInt();   // address
         System.out.println("Nhập mã số công tơ: ");
         int code = scanner.nextInt();
         System.out.println("Nhập chỉ số công tơ cũ: ");
         int oldIndex = scanner.nextInt();
         System.out.println("Nhập chỉ số công tơ mới: ");
         int newIndex = scanner.nextInt();
-        return new BienLai(name, number, code, oldIndex, newIndex);
+        return new Bill(oldIndex,newIndex,new Customer(name,address,code));
     }
 
-    public static void showAll(BienLai[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i]);
-        }
-    }
+
 }
+

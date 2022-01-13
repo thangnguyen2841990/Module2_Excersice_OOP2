@@ -1,14 +1,14 @@
 package com.codegym;
 
-public class KhachHang {
+public class Customer {        //Customer
     private String name;
-    private int apartmentNumber;
-    private int meterCodeNumber;
+    private int apartmentNumber;    // sửa thành: address;
+    private int meterCodeNumber;  //meterCode
 
-    public KhachHang() {
+    public Customer() {
     }
 
-    public KhachHang(String name, int apartmentNumber, int meterCodeNumber) {
+    public Customer(String name, int apartmentNumber, int meterCodeNumber) {
         this.name = name;
         this.apartmentNumber = apartmentNumber;
         this.meterCodeNumber = meterCodeNumber;
